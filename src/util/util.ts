@@ -1,4 +1,5 @@
 import fs from "fs";
+import { Response } from "express";
 import Jimp = require("jimp");
 
 // filterImageFromURL
@@ -32,8 +33,25 @@ export async function filterImageFromURL(inputURL: string): Promise<string> {
 // useful to cleanup after tasks
 // INPUTS
 //    files: Array<string> an array of absolute paths to files
-export async function deleteLocalFiles(files: Array<string>) {
-  for (let file of files) {
-    fs.unlinkSync(file);
-  }
+export async function deleteLocalFiles(file: string) {
+  fs.unlinkSync(file);
 }
+
+export const validateImageUrl = (imageUrl: string, res: Response) => {
+  if (!imageUrl)
+    return res.status(400).send({
+      status: "error",
+      message: "Please use a valid image url!",
+    });
+};
+
+export const handleServerError = (res: Response, error: any) => {
+  if (error.response.status === 404)
+    return res.status(404).send("Image not found!");
+  if (error.response.status === 401)
+    return res
+      .status(401)
+      .send("Unauthorized! Please check url and try again.");
+
+  return res.status(500).send("Something went wrong. Please try again!");
+};
