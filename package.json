@@ -2,10 +2,10 @@
   "name": "udagram",
   "version": "1.0.0",
   "engines": {
-    "node": ">=17.1.x",
+    "node": "16.4.1",
     "npm": ">=6.0.0"
   },
-  "description": "a simple cloud application developed alongside the Udacity Cloud Engineering Nanodegree",
+  "description": "A simple cloud application developed alongside the Udacity Cloud Engineering Nanodegree",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
