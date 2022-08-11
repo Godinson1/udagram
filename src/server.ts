@@ -1,6 +1,12 @@
-import express from "express";
+import express, { Response, Request } from "express";
 import bodyParser from "body-parser";
-import { filterImageFromURL, deleteLocalFiles } from "./util/util";
+import axios from "axios";
+import {
+  filterImageFromURL,
+  deleteLocalFiles,
+  validateImageUrl,
+  handleServerError,
+} from "./util/util";
 
 (async () => {
   // Init the Express application
@@ -37,9 +43,21 @@ import { filterImageFromURL, deleteLocalFiles } from "./util/util";
   });
 
   // Task Solution
-  app.get("/filteredimage", async (req, res) => {
+  app.get("/filteredimage", async (req: Request, res: Response) => {
     const { image_url } = req.query;
-    res.send(image_url);
+    validateImageUrl(image_url as string, res);
+    try {
+      const response = await axios.get(`${image_url}`, {
+        responseType: "arraybuffer",
+      });
+      const imagePath = await filterImageFromURL(response.data);
+      res.status(200).sendFile(imagePath, () => {
+        deleteLocalFiles(imagePath);
+      });
+    } catch (error: any) {
+      console.log("error", error);
+      handleServerError(res, error);
+    }
   });
 
   // Start the Server
