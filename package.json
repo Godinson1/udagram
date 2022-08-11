@@ -2,7 +2,7 @@
   "name": "udagram",
   "version": "1.0.0",
   "engines": {
-    "node": ">=17.1.x",
+    "node": "16.4.1",
     "npm": ">=6.0.0"
   },
   "description": "a simple cloud application developed alongside the Udacity Cloud Engineering Nanodegree",
