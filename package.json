@@ -6,11 +6,12 @@
     "npm": ">=6.0.0"
   },
   "description": "A simple cloud application developed alongside the Udacity Cloud Engineering Nanodegree",
-  "main": "index.js",
+  "main": "src/server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
-    "start": "ts-node ./src/server.ts"
+    "start": "node ./build/server.js",
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC",
